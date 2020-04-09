@@ -1,8 +1,12 @@
-package midi
+package midi.chunks
 
-import Helpers.ShortWithGetBytes
+import midi.Helpers.ShortWithGetBytes
 
-class HeaderChunk(val format: Short, val numTracks: Short, val division: Short) {
+class Header(
+  val format: Short,
+  val numTracks: Short,
+  val division: Short
+) extends Chunk {
   private val VALID_FORMAT_VALUES = Set(0, 1, 2)
 
   require(VALID_FORMAT_VALUES.contains(format))
@@ -27,8 +31,8 @@ class HeaderChunk(val format: Short, val numTracks: Short, val division: Short) 
 
   def getBytes: Array[Byte] = {
     // TODO: efficiency
-    val headerLength = Array[Byte](0, 0, 0, 6)  /*>  Array(0, 0, 0, 6)  */
+    val headerLength = Array[Byte](0x00, 0x00, 0x00, 0x06)  /*>  Array(0, 0, 0, 6)  */
 
-    "Mthd".getBytes ++ headerLength ++ format.getBytes ++ numTracks.getBytes ++ division.getBytes
+    "MThd".getBytes ++ headerLength ++ format.getBytes ++ numTracks.getBytes ++ division.getBytes
   }
 }
