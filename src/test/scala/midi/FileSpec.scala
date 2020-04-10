@@ -5,7 +5,7 @@ import org.scalatest.FunSpec
 import midi.{Event, File}
 import midi.chunks.Track
 import midi.Helpers.convertBytesToHex
-import midi.messages._
+import midi.messages.{EndOfTrack, NoteOff, NoteOn, ProgramChange, SetTempo, TimeSignature}
 
 class FileSpec extends FunSpec {
   describe("format 0 File") {
@@ -69,6 +69,7 @@ class FileSpec extends FunSpec {
         val myMidi = new File(0, 1, 96).addTrack(myTrack)
         val fileBytes = myMidi.getBytes
 
+        // This is from the example given above
         val ExpectedByteString = "4d546864000000060000000100604d54726b0000003b00ff58040402180800ff510307a12000c00500c12e00c24600923060003c606091434060904c208140823040003c400081434000804c4000ff2f00"
         assert(convertBytesToHex(fileBytes) == ExpectedByteString)
     }
