@@ -7,8 +7,7 @@ class Header(
   val numTracks: Short,
   val division: Short
 ) extends Chunk {
-  private final val ValidFormatValues = Set(0, 1, 2)
-
+  private val ValidFormatValues = Set(0, 1, 2)
   require(ValidFormatValues.contains(format))
 
 /**

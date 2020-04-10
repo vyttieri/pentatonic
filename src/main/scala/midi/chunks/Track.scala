@@ -18,14 +18,10 @@ case class Track(val events: Queue[Event] = Queue[Event]()) extends Chunk {
     <track_event>* - zero or more sequenced track events
   **/
   def addEvent(event: Event): Track = {
-    // TODO: Yikes
     if (
       !events.isEmpty &&
-      events.last.message.statusByte == event.message.statusByte &&
-      events.last.message.isInstanceOf[ChannelMessage] &&
       event.message.isInstanceOf[ChannelMessage] &&
-      events.last.message.asInstanceOf[ChannelMessage].channel ==
-        event.message.asInstanceOf[ChannelMessage].channel
+      event.message == events.last.message
     ) {
       this.copy(events :+ event.copy(runningStatus = true))
     } else {
