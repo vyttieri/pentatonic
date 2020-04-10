@@ -36,18 +36,35 @@ import midi.messages._
 **/
 
 class FileSpec extends FunSpec {
-  val myMidi = new File(0, 1, 96)
-  val myTrack = new Track
+
   val tsEvent = new Event(new TimeSignature(4, 2, 24, 8), 0)
   val setTempoEvent = new Event(new SetTempo(500000), 0)
-  val noteOnEvent = new Event(new NoteOn(48, 96), 0)
-  val noteOffEvent = new Event(new NoteOff(48, 96), 192)
-  myTrack.addEvent(tsEvent)
-  myTrack.addEvent(setTempoEvent)
-  myTrack.addEvent(noteOnEvent)
-  myTrack.addEvent(noteOffEvent)
-  myMidi.addTrack(myTrack)
-  myMidi.getBytes
+  val programChange1 = new Event(new ProgramChange(1, 5), 0)
+  val programChange2 = new Event(new ProgramChange(2, 46), 0)
+  val programChange3 = new Event(new ProgramChange(3, 70), 0)
+  val noteOnEvent1 = new Event(new NoteOn(3,48, 96), 0)
+  val noteOnEvent2 = new Event(new NoteOn(3,60, 96), 0)
+  val noteOnEvent3 = new Event(new NoteOn(2,67, 64), 96)
+  val noteOnEvent4 = new Event(new NoteOn(1,76, 32), 96)
+  val noteOffEvent1 = new Event(new NoteOff(3,48, 96), 192)
+  val noteOffEvent2 = new Event(new NoteOff(3,60, 96), 192)
+  val noteOffEvent3 = new Event(new NoteOff(2,67, 64), 192)
+  val noteOffEvent4 = new Event(new NoteOff(1,76, 32), 192)
+  val myTrack = new Track().addEvent(tsEvent)
+                   .addEvent(setTempoEvent)
+                   .addEvent(programChange1)
+                   .addEvent(programChange2)
+                   .addEvent(programChange3)
+                   .addEvent(noteOnEvent1)
+                   .addEvent(noteOnEvent2)
+                   .addEvent(noteOnEvent3)
+                   .addEvent(noteOnEvent4)
+                   .addEvent(noteOffEvent1)
+                   .addEvent(noteOffEvent2)
+                   .addEvent(noteOffEvent3)
+                   .addEvent(noteOffEvent4)
+  val myMidi = new File(0, 1, 96).addTrack(myTrack)
+  // myMidi.getBytes
   myMidi.write("test.mid")
 
   describe("format 0 File") {

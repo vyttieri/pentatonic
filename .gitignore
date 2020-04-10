@@ -3,3 +3,4 @@
 target/
 worksheets/
 metals.sbt
+test.mid

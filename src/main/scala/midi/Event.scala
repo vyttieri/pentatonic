@@ -1,10 +1,38 @@
 package midi
 
+import scala.collection.mutable.ListBuffer
+
 import midi.messages.Message
 
-class Event(val message: Message, val deltaTime: Int) {
-  // TODO: DeltaTime is fucking up
+case class Event(
+  val message: Message,
+  val deltaTime: Int,
+  val runningStatus: Boolean = false
+) {
   def getBytes: Array[Byte] = {
-    Array[Byte](deltaTime.toByte) ++ message.getBytes
+    if (runningStatus) {
+      getDeltaTimeBytes ++ message.getBytes.tail
+    } else {
+      getDeltaTimeBytes ++ message.getBytes
+    }
+  }
+
+  /**
+    deltaTime lengths are stored in variable-length bytes.
+
+  **/
+  private def getDeltaTimeBytes(): Array[Byte] = {
+    if (deltaTime == 0) { return Array[Byte](0) }
+
+    var vlbytes = new ListBuffer[Byte]()
+    var hibit = 0x00
+    var i = deltaTime
+    while (i > 0) {
+      vlbytes += (((i & 0x7f | hibit) & 0xff)).toByte
+      i = i >> 7
+      hibit = 0x80
+    }
+
+    vlbytes.reverse.toArray
   }
 }

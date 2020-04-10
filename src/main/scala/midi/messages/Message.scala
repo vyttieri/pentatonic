@@ -2,7 +2,8 @@ package midi.messages
 
 import scala.collection.immutable.HashMap
 
-class Message(val name: String, val statusByte: Byte) {
+class Message(val name: String, val statusByte: Byte = 0.toByte, val channel: Int = -1) {
+  // TODO: Not all Messages have a channel val ????
   def getBytes: Array[Byte] = ???
 }
 

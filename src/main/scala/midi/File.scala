@@ -7,22 +7,22 @@ import scala.collection.immutable.Queue
 
 import midi.chunks.{Header, Track}
 
-class File(
+case class File(
   val format: Short,
   val numTracks: Short,
-  val division: Short
+  val division: Short,
+  val tracks: Queue[Track] = Queue[Track]()
 ) {
   val header =
     new Header(
       format = format,
       numTracks = numTracks,
       division = division)
-  var tracks = Queue[Track]()
 
-  def addTrack(track: Track): Unit = {
+  def addTrack(track: Track): File = {
     if (header.format == 0) { assert(tracks.size == 0) }
 
-    tracks = tracks :+ track
+    this.copy(tracks = tracks :+ track)
   }
 
   def getBytes: Array[Byte] = {
