@@ -17,4 +17,3 @@ object Message {
     "TimeSignature" -> 0x58.toByte
   )
 }
-

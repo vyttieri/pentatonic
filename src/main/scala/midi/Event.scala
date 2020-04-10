@@ -6,15 +6,16 @@ import midi.messages.Message
 
 case class Event(
   val message: Message,
-  val deltaTime: Int,
+  val deltaTime: Int = 0x00,
   val runningStatus: Boolean = false
 ) {
+
   def getBytes: Array[Byte] = {
-    if (runningStatus) {
+    if (runningStatus)
       getDeltaTimeBytes ++ message.getBytes.tail
-    } else {
+    else
       getDeltaTimeBytes ++ message.getBytes
-    }
+
   }
 
   /**

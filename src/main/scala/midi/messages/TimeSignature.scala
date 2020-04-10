@@ -2,6 +2,8 @@ package midi.messages
 
 import java.nio.ByteBuffer
 
+import midi.Helpers.IntWithGetBytes
+
 /**
   Represents a Time Signature message.
 
@@ -26,7 +28,7 @@ class TimeSignature(
   override def getBytes: Array[Byte] = {
     Array[Byte](0xff.toByte,
                 statusByte,
-                4.toByte,
+                0x04.toByte,
                 numerator.toByte,
                 denominator.toByte,
                 clocksPerTick.toByte,
