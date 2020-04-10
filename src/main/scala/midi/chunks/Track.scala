@@ -2,7 +2,7 @@ package midi.chunks
 
 import midi.Event
 import midi.ByteHelpers.IntWithGetBytes
-import midi.messages.EndOfTrack
+import midi.messages.ChannelMessage
 
 import scala.collection.immutable.Queue
 import scala.math.BigInt
@@ -18,10 +18,14 @@ case class Track(val events: Queue[Event] = Queue[Event]()) extends Chunk {
     <track_event>* - zero or more sequenced track events
   **/
   def addEvent(event: Event): Track = {
+    // TODO: Yikes
     if (
       !events.isEmpty &&
-      events.last.message.getClass == event.message.getClass &&
-      events.last.message.channel == event.message.channel
+      events.last.message.statusByte == event.message.statusByte &&
+      events.last.message.isInstanceOf[ChannelMessage] &&
+      event.message.isInstanceOf[ChannelMessage] &&
+      events.last.message.asInstanceOf[ChannelMessage].channel ==
+        event.message.asInstanceOf[ChannelMessage].channel
     ) {
       this.copy(events :+ event.copy(runningStatus = true))
     } else {
