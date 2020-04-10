@@ -14,7 +14,7 @@ class Message(val name: String, val statusByte: Byte) {
     val prime = 31
     var result = 1
     result = prime * result + statusByte.toInt
-    result = prime * result + (if (name == null) 0 else name.hashCode)
+    result = prime * result + name.hashCode
 
     result
   }
