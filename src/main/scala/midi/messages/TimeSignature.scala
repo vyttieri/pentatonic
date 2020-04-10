@@ -24,14 +24,13 @@ class TimeSignature(
 ) extends Message ("TimeSignature", 0x58) {
   // TODO: validation
   override def getBytes: Array[Byte] = {
-    val fuckyou = ByteBuffer.allocate(4)
-    fuckyou.put(numerator.toByte)
-    fuckyou.put(denominator.toByte)
-    fuckyou.put(clocksPerTick.toByte)
-    fuckyou.put(notesPerQuarter.toByte)
     Array[Byte](0xff.toByte,
                 statusByte,
-                4.toByte) ++ fuckyou.array
+                4.toByte,
+                numerator.toByte,
+                denominator.toByte,
+                clocksPerTick.toByte,
+                notesPerQuarter.toByte)
   }
 }
 
