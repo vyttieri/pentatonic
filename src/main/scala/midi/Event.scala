@@ -9,6 +9,7 @@ case class Event(
   val deltaTime: Int = 0x00,
   val runningStatus: Boolean = false
 ) {
+  lazy val bytes: Array[Byte] = getBytes
 
   def getBytes: Array[Byte] = {
     if (runningStatus)

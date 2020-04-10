@@ -30,13 +30,13 @@ case class Track(val events: Queue[Event] = Queue[Event]()) extends Chunk {
 
   def getBytes: Array[Byte] = {
     val indicator = "MTrk".getBytes
-    val eventBytes: Array[Byte] = events.map(x => x.getBytes).reduce((x, y) => x ++ y)
+    val eventBytes: Array[Byte] = events.map(x => x.bytes).reduce((x, y) => x ++ y)
 
     indicator ++ getChunkLengthBytes ++ eventBytes
   }
 
   private def getChunkLengthBytes: Array[Byte] = {
-    val length = events.map(x => x.getBytes.size).reduce((x, y) => x + y)
+    val length = events.map(x => x.bytes.size).reduce((x, y) => x + y)
 
     Array[Byte](((length >> 24) & 0xff).toByte,
                 ((length >> 16) & 0xff).toByte,
