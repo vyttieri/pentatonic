@@ -13,8 +13,7 @@ import midi.ByteHelpers.IntWithGetBytes
   dd represents the denominator of the time signature
   cc represents the number of MIDI clocks in a metronome tick
   bb expresses the number of notated 32nd-notes in a MIDI quarter-note (24 MIDI clocks)
-    - http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html
-
+  - Complete MIDI Specification - Standard MIDI Files
   e.g.
   FF 58 04 04 02 18 08 - 4/4, 18 MIDI clocks / tick, 8 notated 32nd notes in a MIDI quarter-note.
 **/
