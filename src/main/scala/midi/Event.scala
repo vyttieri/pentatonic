@@ -1,5 +1,6 @@
 package midi
 
+import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
 import midi.messages.Message
@@ -22,19 +23,17 @@ case class Event(
   /**
     deltaTime lengths are stored in variable-length bytes.
 
+    Thanks to the fine people at https://github.com/MarkCWirt/MIDIUtil/
+    so I didn't have to figure out this algorithm myself.
   **/
   private def getDeltaTimeBytes(): Array[Byte] = {
-    if (deltaTime == 0) { return Array[Byte](0) }
-
-    var vlbytes = new ListBuffer[Byte]()
-    var hibit = 0x00
-    var i = deltaTime
-    while (i > 0) {
-      vlbytes += (((i & 0x7f | hibit) & 0xff)).toByte
-      i = i >> 7
-      hibit = 0x80
+    @tailrec
+    def loop(i: Int, deltaTimeBytes: List[Byte], highByte: Int = 0x80): Array[Byte] = {
+      if (i == 0) deltaTimeBytes.reverse.toArray
+      else loop(i >> 7, deltaTimeBytes :+ ((i & 0x7f | highByte) & 0xff).toByte)
     }
 
-    vlbytes.reverse.toArray
+    if (deltaTime == 0) Array[Byte](0)
+    else loop(deltaTime, List[Byte](), 0x00)
   }
 }
