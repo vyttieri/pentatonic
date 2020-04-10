@@ -1,6 +1,6 @@
 package midi
 
-object Helpers {
+object ByteHelpers {
   // https://alvinalexander.com/source-code/scala-how-to-convert-array-bytes-to-hex-string/
   def convertBytesToHex(bytes: Seq[Byte]): String = {
     val sb = new StringBuilder

@@ -4,7 +4,7 @@ import org.scalatest.FunSpec
 
 import midi.{Event, File}
 import midi.chunks.Track
-import midi.Helpers.convertBytesToHex
+import midi.ByteHelpers.convertBytesToHex
 import midi.messages.{EndOfTrack, NoteOff, NoteOn, ProgramChange, SetTempo, TimeSignature}
 
 class FileSpec extends FunSpec {

@@ -1,15 +1,15 @@
 package midi.chunks
 
-import midi.Helpers.ShortWithGetBytes
+import midi.ByteHelpers.ShortWithGetBytes
 
 class Header(
   val format: Short,
   val numTracks: Short,
   val division: Short
 ) extends Chunk {
-  private val VALID_FORMAT_VALUES = Set(0, 1, 2)
+  private final val ValidFormatValues = Set(0, 1, 2)
 
-  require(VALID_FORMAT_VALUES.contains(format))
+  require(ValidFormatValues.contains(format))
 
 /**
   Adapted from http://www.ccarh.org/courses/253/handout/smf/ and

@@ -1,6 +1,7 @@
 package midi.chunks
 
 import midi.Event
+import midi.ByteHelpers.IntWithGetBytes
 import midi.messages.EndOfTrack
 
 import scala.collection.immutable.Queue
@@ -36,11 +37,6 @@ case class Track(val events: Queue[Event] = Queue[Event]()) extends Chunk {
   }
 
   private def getChunkLengthBytes: Array[Byte] = {
-    val length = events.map(x => x.bytes.size).reduce((x, y) => x + y)
-
-    Array[Byte](((length >> 24) & 0xff).toByte,
-                ((length >> 16) & 0xff).toByte,
-                ((length >> 8) & 0xff).toByte,
-                (length & 0xff).toByte)
+    events.map(x => x.bytes.size).reduce((x, y) => x + y).getBytes
   }
 }

@@ -2,7 +2,7 @@ package midi.messages
 
 import java.nio.ByteBuffer
 
-import midi.Helpers.IntWithGetBytes
+import midi.ByteHelpers.IntWithGetBytes
 
 /**
   Represents a Time Signature message.

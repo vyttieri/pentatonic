@@ -2,7 +2,7 @@ package midi.chunks
 
 import org.scalatest.FunSpec
 
-import midi.Helpers.convertBytesToHex
+import midi.ByteHelpers.convertBytesToHex
 
 class HeaderSpec extends FunSpec {
   describe("getBytes") {
