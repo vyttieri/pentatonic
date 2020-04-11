@@ -1,12 +1,12 @@
 package midi.messages
 
-class ProgramChange(
-  channel: Int,
-  val dataByte: Int
-) extends ChannelMessage("ProgramChange", 0xc0.toByte, channel) {
-  require(0 to 127 contains dataByte)
+case class ProgramChange(
+  override val channel: Int,
+  val data: Int
+) extends ChannelMessage (0xc0, channel) {
+  require(0 to 127 contains data.toByte)
 
   override def getBytes: Array[Byte] = {
-    Array[Byte]((0xc0 | channel).toByte, dataByte.toByte)
+    Array[Byte]((status | channel).toByte, data.toByte)
   }
 }

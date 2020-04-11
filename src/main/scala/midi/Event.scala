@@ -13,10 +13,13 @@ case class Event(
   lazy val bytes: Array[Byte] = getBytes
 
   def getBytes: Array[Byte] = {
-    if (runningStatus)
+    if (runningStatus) {
+      println("RUNNING STATUS")
       getDeltaTimeBytes ++ message.getBytes.tail
-    else
+    } else {
+      println("NO RUNNING STATUS")
       getDeltaTimeBytes ++ message.getBytes
+    }
 
   }
 

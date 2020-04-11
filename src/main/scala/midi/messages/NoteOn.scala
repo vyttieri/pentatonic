@@ -1,12 +1,12 @@
 package midi.messages
 
-class NoteOn(
-  channel: Int,
+case class NoteOn(
+  override val channel: Int,
   val keyNumber: Int,
   val velocity: Int,
-) extends ChannelMessage ("NoteOn", 0x90.toByte, channel) {
+) extends ChannelMessage (0x90, channel) {
   require(0 to 127 contains velocity)
   override def getBytes: Array[Byte] = {
-    Array[Byte]((0x90 | channel).toByte, keyNumber.toByte, velocity.toByte)
+    Array[Byte]((status | channel).toByte, keyNumber.toByte, velocity.toByte)
   }
 }

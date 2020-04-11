@@ -22,11 +22,11 @@ class TimeSignature(
   val denominator: Int,
   val clocksPerTick: Int,
   val notesPerQuarter: Int
-) extends Message ("TimeSignature", 0x58) {
+) extends Message (0x58) {
   // TODO: validation
   override def getBytes: Array[Byte] = {
     Array[Byte](0xff.toByte,
-                statusByte,
+                status.toByte,
                 0x04.toByte,
                 numerator.toByte,
                 denominator.toByte,
@@ -34,14 +34,3 @@ class TimeSignature(
                 notesPerQuarter.toByte)
   }
 }
-
-
-/****
-
-track = new track
-track.addNote
-
-
-****////
-
-

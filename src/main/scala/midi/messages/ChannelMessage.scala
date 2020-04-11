@@ -1,10 +1,9 @@
 package midi.messages
 
-class ChannelMessage(
-  name: String,
-  statusByte: Byte,
-  val channel: Int
-) extends Message (name, statusByte) {
+abstract class ChannelMessage(
+  override val status: Int,
+  val channel: Int)
+extends Message (status) {
   require(0 to 15 contains channel)
 
   override def canEqual(a: Any) = a.isInstanceOf[ChannelMessage]
@@ -12,8 +11,8 @@ class ChannelMessage(
   override def hashCode: Int = {
     val prime = 31
     var result = 1
-    result = prime * result + statusByte.toInt + channel
-    result = prime * result + name.hashCode
+    result = prime * result + status + channel
+    result = prime * result + this.getClass.toString.hashCode
 
     result
   }

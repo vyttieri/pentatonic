@@ -10,11 +10,11 @@ mi = 0: major key
 mi = 1: minor key
 - Complete Midi Spec
 **/
-class KeySignature(sf: Int, mi: Int) extends Message ("KeySignature", 0x59.toByte){
+class KeySignature(sf: Int, mi: Int) extends Message (0x59) {
   require(-7 to 7 contains sf)
   require(0 to 1 contains mi)
 
   override def getBytes: Array[Byte] = {
-    Array[Byte](0xff.toByte, statusByte, 0x02.toByte, sf.toByte, mi.toByte)
+    Array[Byte](0xff.toByte, 0x59, 0x02.toByte, sf.toByte, mi.toByte)
   }
 }

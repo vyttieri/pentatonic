@@ -22,12 +22,12 @@ package midi.messages
 
   1 quarter / 1000000 microseconds
 **/
-class SetTempo(microsPerQuarter: Int) extends Message ("Tempo", 0x51.toByte) {
+class SetTempo(microsPerQuarter: Int) extends Message (0x51) {
   require(microsPerQuarter <= 16777215) // max 3-byte unsigned int
 
   override def getBytes: Array[Byte] = {
     Array[Byte](0xff.toByte,
-                statusByte,
+                status.toByte,
                 0x03.toByte,
                 ((microsPerQuarter >> 16) & 0xff).toByte,
                 ((microsPerQuarter >> 8) & 0xff).toByte,
